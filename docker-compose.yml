@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  backend:
+    build:
+      context: "./app"
+      dockerfile: Dockerfile
+    restart: always
+    container_name: anu_ai_weather_be
+    ports:
+      - "2222:3000"
+
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb:11
+    container_name: anu_ai_weather_db
+    restart: always
+    ports:
+      - "3333:3306"
+    volumes:
+      - "./mariadb/conf.d:/etc/mysql/conf.d"
+      - "./mariadb/data:/var/lib/mysql"
+    environment:
+      MARIADB_ROOT_PASSWORD: rladmsals
